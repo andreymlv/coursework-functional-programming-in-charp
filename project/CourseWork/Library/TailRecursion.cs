@@ -15,10 +15,10 @@ public static class TailRecursion
     {
         while (true)
         {
-            var recursionResult = func();
-            if (recursionResult.IsFinalResult)
-                return recursionResult.Result;
-            func = recursionResult.NextStep;
+            var (isFinalResult, result, nextStep) = func();
+            if (isFinalResult)
+                return result;
+            func = nextStep;
         }
     }
 

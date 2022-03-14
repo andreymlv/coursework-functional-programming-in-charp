@@ -7,4 +7,6 @@
 /// <param name="IsFinalResult">Получили ли мы конечный результат вычислений рекурсии?</param>
 /// <param name="Result">Сам результат выполнения рекурсивной функции.</param>
 /// <param name="NextStep">Функция, которая воспроизводит следующее значение для выполнения нашей рекурсивной функции.</param>
-public readonly record struct RecursionResult<T>(bool IsFinalResult, T Result, Func<RecursionResult<T>> NextStep) { }
+public readonly record struct RecursionResult<T>(bool IsFinalResult, T Result, Func<RecursionResult<T>> NextStep)
+{
+}

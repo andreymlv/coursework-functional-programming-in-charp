@@ -1,13 +1,11 @@
 using Xunit;
 
-namespace Tests
-{
-    public class SumUnitTest
-    {
-        [Fact]
-        public void RecursiveTest()
-        {
+namespace Tests;
 
-        }
+public class SumUnitTest
+{
+    [Fact]
+    public void RecursiveTest()
+    {
     }
 }
