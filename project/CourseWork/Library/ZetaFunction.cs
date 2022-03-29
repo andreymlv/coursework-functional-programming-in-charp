@@ -7,7 +7,7 @@ public static class ZetaFunction
     /// </summary>
     /// <param name="number">Входное число</param>
     /// <returns>Результат проверки на простоту числа</returns>
-    private static bool PrimeCheck(int number)
+    private static bool IsPrime(int number)
     {
         // 2 и 3 - простые числа
         if (number is > 1 and < 4)
@@ -22,15 +22,18 @@ public static class ZetaFunction
                                 которое делится на наше изначальное число, то получаем false */
     }
 
-    // Function to return the smallest
-    // prime number greater than N
+    /// <summary>
+    ///     Нахождение следующего простого числа после <paramref name="number"/>.
+    /// </summary>
+    /// <param name="number">Число.</param>
+    /// <returns></returns>
     private static double NextPrime(double number)
     {
         var n = (int) number;
         // Loop continuously until isPrime
         // returns true for a number
         // greater than n
-        while (!PrimeCheck(++n))
+        while (!IsPrime(++n))
         {
         }
 
