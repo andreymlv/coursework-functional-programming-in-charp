@@ -1,5 +1,8 @@
 ﻿namespace Library;
 
+/// <summary>
+///      Реализация оператора умножения (П).
+/// </summary>
 public static class Product
 {
     private const double Base = 1.0d;
@@ -7,62 +10,15 @@ public static class Product
     private static double Operator(double a, double b) => a * b;
 
     /// <summary>
-    ///     Рекурсивный вызов оператора произведения.
-    ///     Возможно переполнение стека.
+    ///     Вычисление произведения последовательности <paramref name="term"/> от <paramref name="start"/>
+    ///     до <paramref name="end"/>, где следующий элемент выбирается с помощью <paramref name="next"/>.
+    ///     Стратегия вычисления выбирается с помощью функций в <see cref="Sequence"/>.
     /// </summary>
-    /// <param name="term">Функция, которая будет применена к каждому элементу произведения.</param>
-    /// <param name="start">Начало отрезка.</param>
-    /// <param name="next">Функция выбора следующего элемента, основываясь на предыдущем.</param>
-    /// <param name="end">Конец отрезка.</param>
-    /// <returns>
-    ///     Произведение от <paramref name="start" /> до <paramref name="end" /> с шагом <paramref name="next" /> с
-    ///     применением <paramref name="term" /> для каждого элемента.
-    /// </returns>
-    public static double
-        RecursiveInvoke(Func<double, double> term, double start, Func<double, double> next, double end) =>
-        Sequence.RecursiveInvoke(Operator, term, start, next, end, Base);
-
-    /// <summary>
-    ///     Рекурсивный вызов оператора произведения, применяя оптимизацию хвостовой рекурсии.
-    /// </summary>
-    /// <param name="term">Функция, которая будет применена к каждому элементу произведения.</param>
-    /// <param name="start">Начало отрезка.</param>
-    /// <param name="next">Функция выбора следующего элемента, основываясь на предыдущем.</param>
-    /// <param name="end">Конец отрезка.</param>
-    /// <returns>
-    ///     Произведение от <paramref name="start" /> до <paramref name="end" /> с шагом <paramref name="next" /> с
-    ///     применением <paramref name="term" /> для каждого элемента.
-    /// </returns>
-    public static double TailRecursiveInvoke(Func<double, double> term, double start, Func<double, double> next,
-        double end) =>
-        Sequence.TailRecursiveInvoke(Operator, term, start, next, end, Base);
-
-    /// <summary>
-    ///     Императивный вызов оператора произведения.
-    /// </summary>
-    /// <param name="term">Функция, которая будет применена к каждому элементу произведения.</param>
-    /// <param name="start">Начало отрезка.</param>
-    /// <param name="next">Функция выбора следующего элемента, основываясь на предыдущем.</param>
-    /// <param name="end">Конец отрезка.</param>
-    /// <returns>
-    ///     Произведение от <paramref name="start" /> до <paramref name="end" /> с шагом <paramref name="next" /> с
-    ///     применением <paramref name="term" /> для каждого элемента.
-    /// </returns>
-    public static double ImperativeInvoke(Func<double, double> term, double start, Func<double, double> next,
-        double end) =>
-        Sequence.ImperativeInvoke(Operator, term, start, next, end, Base);
-
-    /// <summary>
-    ///     Параллельное вычисление суммы с помощью стандартных средств DotNet.
-    /// </summary>
-    /// <param name="term">Функция, которая будет применена к каждому элементу произведения.</param>
-    /// <param name="start">Начало отрезка.</param>
-    /// <param name="next">Функция выбора следующего элемента, основываясь на предыдущем.</param>
-    /// <param name="end">Конец отрезка.</param>
-    /// <returns>
-    ///     Произведение от <paramref name="start" /> до <paramref name="end" /> с шагом <paramref name="next" /> с
-    ///     применением <paramref name="term" /> для каждого элемента.
-    /// </returns>
-    public static double DotNetInvoke(Func<double, double> term, int start, Func<double, double> next, int end) =>
-        Sequence.DotNetInvoke(Operator, term, start, next, end, Base);
+    /// <param name="invoke">Стратегия вычисления.</param>
+    /// <param name="term">Общий член последовательности.</param>
+    /// <param name="start">Начало последовательности.</param>
+    /// <param name="next">Выбор следующего элемента.</param>
+    /// <param name="end">Конец последовательности.</param>
+    /// <returns>Вычисление последовательности с заданными параметрами.</returns>
+    public static double Solve(Func<Func<double, double, double>, Func<double, double>, double, Func<double, double>, double, double, double> invoke, Func<double, double> term, double start, Func<double, double> next, double end) => invoke(Operator, term, start, next, end, Base);
 }

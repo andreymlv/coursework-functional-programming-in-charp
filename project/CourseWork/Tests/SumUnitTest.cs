@@ -14,7 +14,7 @@ public class SumUnitTest
     [InlineData(-5, 5, 0)]
     public void RecursiveInvokeTest(double from, double to, double expected)
     {
-        var actual = Sum.RecursiveInvoke(Term, from, Next, to);
+        var actual = Sum.Solve(Sequence.RecursiveInvoke, Term, from, Next, to);
         Assert.Equal(expected, actual);
     }
 
@@ -24,7 +24,7 @@ public class SumUnitTest
     [InlineData(-5, 5, 0)]
     public void TailRecursiveInvokeTest(double from, double to, double expected)
     {
-        var actual = Sum.TailRecursiveInvoke(Term, from, Next, to);
+        var actual = Sum.Solve(Sequence.TailRecursiveInvoke, Term, from, Next, to);
         Assert.Equal(expected, actual);
     }
 
@@ -34,17 +34,7 @@ public class SumUnitTest
     [InlineData(-5, 5, 0)]
     public void ImperativeInvokeTest(double from, double to, double expected)
     {
-        var actual = Sum.ImperativeInvoke(Term, from, Next, to);
-        Assert.Equal(expected, actual);
-    }
-
-    [Theory]
-    [InlineData(1, 1, 1)]
-    [InlineData(1, 2, 3)]
-    [InlineData(-5, 5, 0)]
-    public void DotNetInvokeTest(int from, int to, double expected)
-    {
-        var actual = Sum.DotNetInvoke(Term, from, Next, to);
+        var actual = Sum.Solve(Sequence.ImperativeInvoke, Term, from, Next, to);
         Assert.Equal(expected, actual);
     }
 }
