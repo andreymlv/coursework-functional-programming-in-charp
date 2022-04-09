@@ -37,4 +37,14 @@ public class SumUnitTest
         var actual = Sum.Solve(Sequence.ImperativeInvoke, Term, from, Next, to);
         Assert.Equal(expected, actual);
     }
+
+    [Theory]
+    [InlineData(1, 1, 1)]
+    [InlineData(1, 2, 3)]
+    [InlineData(-5, 5, 0)]
+    public void DotNetInvokeTest(double from, double to, double expected)
+    {
+        var actual = Sum.Solve(Sequence.DotNetInvoke, Term, from, Next, to);
+        Assert.Equal(expected, actual);
+    }
 }

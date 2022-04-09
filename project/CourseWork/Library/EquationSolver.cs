@@ -3,15 +3,15 @@ namespace Library;
 
 public static class EquationSolver
 {
-    public static readonly double Epsilon = 0.001;
+    private static readonly double Epsilon = 0.001;
 
-    public static bool CloseEnough(double x, double y) => Math.Abs(x - y) < Epsilon;
+    private static bool CloseEnough(double x, double y) => Math.Abs(x - y) < Epsilon;
 
-    public static double Average(double x, double y) => (x + y) / 2;
+    private static double Average(double x, double y) => (x + y) / 2;
 
-    public static bool Positive(double x) => x > 0;
+    private static bool Positive(double x) => x > 0;
 
-    public static bool Negative(double x) => x < 0;
+    private static bool Negative(double x) => x < 0;
 
     private static double Search(Func<double, double> f, double negPoint, double posPoint)
     {
@@ -56,4 +56,3 @@ public static class EquationSolver
             throw new ArgumentException($"Arguments don't have different signs: {nameof(a)} and {nameof(b)}");
     }
 }
-

@@ -27,4 +27,11 @@ public class PiSeriesUnitTest
         var actual = PiSeries.Solve(Sequence.ImperativeInvoke);
         Assert.True(Math.Abs(Math.PI - actual) < precition);
     }
+
+    [Fact]
+    public void DotNetInvokeTest()
+    {
+        var actual = PiSeries.Solve(Sequence.DotNetInvoke);
+        Assert.True(Math.Abs(Math.PI - actual) < precition);
+    }
 }

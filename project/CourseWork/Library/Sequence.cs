@@ -100,10 +100,10 @@ public static class Sequence
     ///     Вычисление последовательности от <paramref name="start" /> до <paramref name="end" /> с шагом
     ///     <paramref name="next" /> с применением <paramref name="term" /> для каждого элемента.
     /// </returns>
-    public static double DotNetInvoke(Func<double, double, double> op, Func<double, double> term, int start,
-        Func<double, double> next, int end, double based) =>
+    public static double DotNetInvoke(Func<double, double, double> op, Func<double, double> term, double start,
+        Func<double, double> next, double end, double based) =>
         ParallelEnumerable
-            .Range(start, end - start + 1) // Создаём отрезок [start; end] типа int
+            .Range((int)start, (int)(end - start) + 1) // Создаём отрезок [start; end] типа int
             .Where((_, i) => i % next(0) == 0) // Фильтруем элементы с шагом next(0)
             .Select<int, double>(i => i) // Конвертируем отрезок в double
             .Select(term) // Для каждого отфильтрованного элемента применяем функцию term
