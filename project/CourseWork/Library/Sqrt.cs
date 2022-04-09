@@ -10,9 +10,8 @@ public static class Sqrt
 {
     /// <summary>
     ///     Точность поиска.
-    ///     Чем меньше, тем точнее.
     /// </summary>
-    private const double Epsilon = 0.001;
+    public const double Epsilon = 0.001;
 
     /// <summary>
     ///     Квадрат числа.
