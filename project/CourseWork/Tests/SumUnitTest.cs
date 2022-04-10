@@ -1,12 +1,19 @@
-using Xunit;
 using Library;
+using Xunit;
 
 namespace Tests;
 
 public class SumUnitTest
 {
-    private static double Term(double x) => x;
-    private static double Next(double x) => x + 1;
+    private static double Term(double x)
+    {
+        return x;
+    }
+
+    private static double Next(double x)
+    {
+        return x + 1;
+    }
 
     [Theory]
     [InlineData(1, 1, 1)]

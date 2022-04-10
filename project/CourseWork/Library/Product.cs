@@ -1,18 +1,21 @@
 ﻿namespace Library;
 
 /// <summary>
-///      Реализация оператора умножения (П).
+///     Реализация оператора умножения (П).
 /// </summary>
 public static class Product
 {
     private const double Base = 1.0d;
 
-    private static double Operator(double a, double b) => a * b;
+    private static double Operator(double a, double b)
+    {
+        return a * b;
+    }
 
     /// <summary>
-    ///     Вычисление произведения последовательности <paramref name="term"/> от <paramref name="start"/>
-    ///     до <paramref name="end"/>, где следующий элемент выбирается с помощью <paramref name="next"/>.
-    ///     Стратегия вычисления выбирается с помощью функций в <see cref="Accumulate"/>.
+    ///     Вычисление произведения последовательности <paramref name="term" /> от <paramref name="start" />
+    ///     до <paramref name="end" />, где следующий элемент выбирается с помощью <paramref name="next" />.
+    ///     Стратегия вычисления выбирается с помощью функций в <see cref="Accumulate" />.
     /// </summary>
     /// <param name="strategy">Стратегия вычисления.</param>
     /// <param name="term">Общий член последовательности.</param>
@@ -20,5 +23,10 @@ public static class Product
     /// <param name="next">Выбор следующего элемента.</param>
     /// <param name="end">Конец последовательности.</param>
     /// <returns>Вычисление последовательности с заданными параметрами.</returns>
-    public static double Solve(Func<Func<double, double, double>, Func<double, double>, double, Func<double, double>, double, double, double> strategy, Func<double, double> term, double start, Func<double, double> next, double end) => strategy(Operator, term, start, next, end, Base);
+    public static double Solve(
+        Func<Func<double, double, double>, Func<double, double>, double, Func<double, double>, double, double, double>
+            strategy, Func<double, double> term, double start, Func<double, double> next, double end)
+    {
+        return strategy(Operator, term, start, next, end, Base);
+    }
 }

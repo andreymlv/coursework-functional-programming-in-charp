@@ -1,5 +1,4 @@
-﻿
-namespace Library;
+﻿namespace Library;
 
 /// <summary>
 ///     Вавилонский метод (метод Герона) для поиска приближенного значения корня числа.
@@ -18,15 +17,21 @@ public static class Sqrt
     /// </summary>
     /// <param name="x">Число.</param>
     /// <returns>Результат умножения числа на само себя.</returns>
-    private static double Square(double x) => x * x;
+    private static double Square(double x)
+    {
+        return x * x;
+    }
 
     /// <summary>
     ///     Проверяем, что нашли корень числа.
     /// </summary>
     /// <param name="guess">Догадка корня числа.</param>
     /// <param name="x">Число, корень которого ищем.</param>
-    /// <returns>Проверяем равенство $guess^2 = x$ с точность <see cref="Epsilon"/>.</returns>
-    private static bool Check(double guess, double x) => Math.Abs(Square(guess) - x) < Epsilon;
+    /// <returns>Проверяем равенство $guess^2 = x$ с точность <see cref="Epsilon" />.</returns>
+    private static bool Check(double guess, double x)
+    {
+        return Math.Abs(Square(guess) - x) < Epsilon;
+    }
 
     /// <summary>
     //      Среднее между двумя числами.
@@ -34,7 +39,10 @@ public static class Sqrt
     /// <param name="x">Первое число.</param>
     /// <param name="y">Второе число.</param>
     /// <returns>Сумма двух чисел, делённую на два.</returns>
-    private static double Average(double x, double y) => (x + y) / 2.0;
+    private static double Average(double x, double y)
+    {
+        return (x + y) / 2.0;
+    }
 
     /// <summary>
     ///     Увеличиваем точность корня числа.
@@ -43,43 +51,67 @@ public static class Sqrt
     /// <param name="guess">Догадка корня числа.</param>
     /// <param name="x">Число, корень которого ищем.</param>
     /// <returns>Улучшенный корень числа.</returns>
-    private static double Improve(double guess, double x) => Average(guess, x / guess);
+    private static double Improve(double guess, double x)
+    {
+        return Average(guess, x / guess);
+    }
 
     /// <summary>
-    ///     Корень числа <paramref name="x"/>, начиная поиск с <paramref name="guess"/>.
+    ///     Корень числа <paramref name="x" />, начиная поиск с <paramref name="guess" />.
     /// </summary>
     /// <param name="guess">Догадка корня числа.</param>
     /// <param name="x">Число, корень которого мы ищем.</param>
     /// <returns>Догадка корня числа.</returns>
-    private static double SqrtIterate(double guess, double x) => Check(guess, x) ? guess : SqrtIterate(Improve(guess, x), x);
+    private static double SqrtIterate(double guess, double x)
+    {
+        while (true)
+        {
+            if (Check(guess, x)) return guess;
+            guess = Improve(guess, x);
+        }
+    }
 
     /// <summary>
     ///     Корень числа.
     /// </summary>
     /// <param name="x">Число, корень которого мы ищем.</param>
-    /// <returns>Корень числа <paramref name="x"/>, начиная поиск с <paramref name="guess"/>.</returns>
-    public static double RecursiveInvoke(double x) => SqrtIterate(1.0, x);
+    /// <returns>Корень числа <paramref name="x" />, начиная поиск с <paramref name="guess" />.</returns>
+    public static double RecursiveInvoke(double x)
+    {
+        return SqrtIterate(1.0, x);
+    }
 
     /// <summary>
     ///     Корень числа, применяя оптимизацию хвостовой рекурсии.
     /// </summary>
     /// <param name="x"></param>
-    /// <returns>Корень числа <paramref name="x"/>, начиная поиск с <paramref name="guess"/>.</returns>
-    public static double TailRecursiveInvoke(double x) => TailRecursion.Execute(() => RecursiveInvokeHelper(1.0, x));
+    /// <returns>Корень числа <paramref name="x" />, начиная поиск с <paramref name="guess" />.</returns>
+    public static double TailRecursiveInvoke(double x)
+    {
+        return TailRecursion.Execute(() => RecursiveInvokeHelper(1.0, x));
+    }
 
     /// <summary>
-    ///     Корень числа <paramref name="x"/>, начиная поиск с <paramref name="guess"/>.
+    ///     Корень числа <paramref name="x" />, начиная поиск с <paramref name="guess" />.
     /// </summary>
     /// <param name="guess">Догадка корня числа.</param>
     /// <param name="x">Число, корень которого мы ищем.</param>
     /// <returns>Догадка корня числа.</returns>
-    private static RecursionResult<double> RecursiveInvokeHelper(double guess, double x) => Check(guess, x) ? TailRecursion.Return(guess) : TailRecursion.Next(() => RecursiveInvokeHelper(Improve(guess, x), x));
+    private static RecursionResult<double> RecursiveInvokeHelper(double guess, double x)
+    {
+        return Check(guess, x)
+            ? TailRecursion.Return(guess)
+            : TailRecursion.Next(() => RecursiveInvokeHelper(Improve(guess, x), x));
+    }
 
     /// <summary>
     ///     Вычисление квадратного корня с помощью нахождения неподвижной точки функции f(x) = x / y.
     ///     Используется торможение, из-за того, что функция f(x) не сходится обычным методом нахождения неподвижной точки.
     /// </summary>
     /// <param name="x">Число, корень которого мы ищем.</param>
-    /// <returns>Корень квадратный числа <paramref name="x"/>.</returns>
-    public static double FixedPointInvoke(double x) => EquationSolver.FixedPoint(EquationSolver.AverageDamp((y) => x / y), 1.0);
+    /// <returns>Корень квадратный числа <paramref name="x" />.</returns>
+    public static double FixedPointInvoke(double x)
+    {
+        return EquationSolver.FixedPoint(EquationSolver.AverageDamp(y => x / y), 1.0);
+    }
 }

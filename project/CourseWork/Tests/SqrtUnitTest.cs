@@ -1,6 +1,6 @@
-﻿using Xunit;
+﻿using System;
 using Library;
-using System;
+using Xunit;
 
 namespace Tests;
 
@@ -36,4 +36,3 @@ public class SqrtUnitTest
         Assert.True(Math.Abs(expected - actual) < Sqrt.Epsilon);
     }
 }
-
