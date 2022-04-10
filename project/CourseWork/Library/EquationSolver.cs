@@ -110,10 +110,13 @@ public static class EquationSolver
     }
 
     /// <summary>
+    ///     Функция-обёртка для вычисления фиксированной точки функции с помощью двух трансформаций:
+    ///     - Метод Ньютона <see cref="NewtonsTransform(Func{double, double})"/>
+    ///     - Метода торможения усреднением <see cref="AverageDampTransform(Func{double, double})"/>
     /// </summary>
-    /// <param name="func"></param>
-    /// <param name="transform"></param>
-    /// <param name="guess"></param>
+    /// <param name="func">Функция, в которой мы ищем фиксированную точку.</param>
+    /// <param name="transform">Метод трансформации.</param>
+    /// <param name="guess">Начальное приближение.</param>
     /// <returns></returns>
     public static double FixedPointOfTransform(Func<double, double> func,
         Func<Func<double, double>, Func<double, double>> transform, double guess)
