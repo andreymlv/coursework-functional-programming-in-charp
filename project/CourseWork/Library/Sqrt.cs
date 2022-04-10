@@ -34,11 +34,11 @@ public static class Sqrt
     }
 
     /// <summary>
-    //      Среднее между двумя числами.
+    ///     Среднее между двумя числами.
     /// </summary>
     /// <param name="x">Первое число.</param>
     /// <param name="y">Второе число.</param>
-    /// <returns>Сумма двух чисел, делённую на два.</returns>
+    /// <returns>Сумма двух чисел, делённое на два</returns>
     private static double Average(double x, double y)
     {
         return (x + y) / 2.0;
@@ -102,16 +102,5 @@ public static class Sqrt
         return Check(guess, x)
             ? TailRecursion.Return(guess)
             : TailRecursion.Next(() => RecursiveInvokeHelper(Improve(guess, x), x));
-    }
-
-    /// <summary>
-    ///     Вычисление квадратного корня с помощью нахождения неподвижной точки функции f(x) = x / y.
-    ///     Используется торможение, из-за того, что функция f(x) не сходится обычным методом нахождения неподвижной точки.
-    /// </summary>
-    /// <param name="x">Число, корень которого мы ищем.</param>
-    /// <returns>Корень квадратный числа <paramref name="x" />.</returns>
-    public static double FixedPointInvoke(double x)
-    {
-        return EquationSolver.FixedPoint(EquationSolver.AverageDamp(y => x / y), 1.0);
     }
 }

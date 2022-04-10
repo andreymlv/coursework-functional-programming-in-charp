@@ -2,7 +2,7 @@
 
 public static class EquationSolver
 {
-    private const double Epsilon = 0.0001;
+    private const double Epsilon = 0.00001;
 
     private static bool CloseEnough(double x, double y)
     {
@@ -44,6 +44,21 @@ public static class EquationSolver
         }
     }
 
+    private static double FixedPoint(Func<double, double> f, double firstGuess)
+    {
+        while (true)
+        {
+            var next = f(firstGuess);
+            if (CloseEnough(firstGuess, next)) return next;
+            firstGuess = next;
+        }
+    }
+
+    private static Func<double, double> Derivative(Func<double, double> f)
+    {
+        return x => (f(x + Epsilon) - f(x)) / Epsilon;
+    }
+
     /// <summary>
     ///     Метод половинного деления.
     ///     Метод нахождения корней уравнения.
@@ -68,34 +83,41 @@ public static class EquationSolver
     }
 
     /// <summary>
-    ///     Вычисление неподвижной точки функции.
-    ///     Число x называется неподвижной точкой функции f, если оно удолетворяет f(x) = x.
-    ///     Работает только для некоторых функций.
-    /// </summary>
-    /// <param name="f">Функция, в которой ищем неподвижную точку.</param>
-    /// <param name="firstGuess">Первое приблежение, которое будет улучшаться.</param>
-    /// <returns>Неподвижная точка функции <paramref name="f" />.</returns>
-    public static double FixedPoint(Func<double, double> f, double firstGuess)
-    {
-        while (true)
-        {
-            var next = f(firstGuess);
-            if (CloseEnough(firstGuess, next)) return next;
-            firstGuess = next;
-        }
-    }
-
-    /// <summary>
     ///     Функция высшего порядка для торможения усреднением.
-    ///     Используется для нахождения неподвижной точки тех функций, которые не могут сойтись простым вызывом FixedPoint.
+    ///     Используется для нахождения неподвижной точки тех функций, которые не могут сойтись простым вызывом
+    ///     <see cref="FixedPoint" />.
     /// </summary>
     /// <param name="f">Функция, в которой ищем неподвижную точку.</param>
     /// <returns>
     ///     Функцию, которая вернёт усреднённое значение между входным значением <paramref name="f" /> и значением
     ///     вычисления <paramref name="f" /> от входного значения.
     /// </returns>
-    public static Func<double, double> AverageDamp(Func<double, double> f)
+    public static Func<double, double> AverageDampTransform(Func<double, double> f)
     {
         return x => Average(x, f(x));
+    }
+
+    /// <summary>
+    ///     Функция высшего порядка для метода Ньютона.
+    ///     Используется для нахождения неподвижной точки тех функций, которые не могут сойтись простым вызывом
+    ///     <see cref="FixedPoint" />.
+    /// </summary>
+    /// <param name="func">Функция, в которой ищем неподвижную точку.</param>
+    /// <returns>Функция, которая является косательной для текущей функци, для которой находится пересечение с осью абсцисс.</returns>
+    public static Func<double, double> NewtonsTransform(Func<double, double> func)
+    {
+        return x => x - func(x) / Derivative(func)(x);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="func"></param>
+    /// <param name="transform"></param>
+    /// <param name="guess"></param>
+    /// <returns></returns>
+    public static double FixedPointOfTransform(Func<double, double> func,
+        Func<Func<double, double>, Func<double, double>> transform, double guess)
+    {
+        return FixedPoint(transform(func), guess);
     }
 }

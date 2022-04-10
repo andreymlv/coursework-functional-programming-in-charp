@@ -18,19 +18,12 @@ public class EquationSolverUnitTest
     [Fact]
     public void HalfIntervalEquationTest()
     {
-        static double eq(double x)
+        static double Equation(double x)
         {
             return Math.Pow(x, 3) - 2 * x - 3;
         }
 
-        var actual = EquationSolver.HalfIntervalMethod(eq, 1.0, 2.0);
+        var actual = EquationSolver.HalfIntervalMethod(Equation, 1.0, 2.0);
         Assert.True(Math.Abs(1.8933 - actual) < Epsilon);
-    }
-
-    [Fact]
-    public void FixedPointCos()
-    {
-        var actual = EquationSolver.FixedPoint(Math.Cos, 1.0);
-        Assert.True(Math.Abs(0.739085 - actual) < Epsilon);
     }
 }
