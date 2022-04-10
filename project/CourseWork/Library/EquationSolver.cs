@@ -26,33 +26,35 @@ public static class EquationSolver
 
     private static double Search(Func<double, double> f, double negPoint, double posPoint)
     {
-        var midpoint = Average(negPoint, posPoint);
-
-        if (!CloseEnough(negPoint, posPoint))
+        while (true)
         {
+            var midpoint = Average(negPoint, posPoint);
+
+            if (CloseEnough(negPoint, posPoint)) return midpoint;
             var testValue = f(midpoint);
 
             if (Positive(testValue))
-                return Search(f, negPoint, midpoint);
-            if (Negative(testValue))
-                return Search(f, midpoint, posPoint);
-        }
+            {
+                posPoint = midpoint;
+                continue;
+            }
 
-        return midpoint;
+            if (!Negative(testValue)) return midpoint;
+            negPoint = midpoint;
+        }
     }
 
     /// <summary>
     ///     Метод половинного деления.
     ///     Метод нахождения корней уравнения.
-    ///     Идея в том, что если даны две точки a и b, что f(a) < 0 < f( b),
-    ///                                                                 то между ними существует f( c)= 0.
-    ///                                                                 Тогда воспользуемся идеей бинарного поиска, чтобы найти
-    ///                                                                 нужную точку.
+    ///     Идея в том, что если даны две точки a и b, что f(a) &lt; 0 &lt; f( b) то между ними существует f( c)= 0.
+    ///     Тогда воспользуемся идеей бинарного поиска, чтобы найти нужную точку.
     /// </summary>
     /// <param name="f">Функция, в которой ищем корень.</param>
     /// <param name="a">Начало интервала поиска.</param>
     /// <param name="b">Конец интервала поиска.</param>
     /// <returns>Корень уравнения между <paramref name="a" /> и <paramref name="b" />.</returns>
+    /// <exception cref="ArgumentException">Если f(a) и f(b) имеют одинаковые знаки.</exception>
     public static double HalfIntervalMethod(Func<double, double> f, double a, double b)
     {
         var aValue = f(a);
