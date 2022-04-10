@@ -10,28 +10,28 @@ public class PiSeriesUnitTest
     [Fact]
     public void RecursiveInvokeTest()
     {
-        var actual = PiSeries.Solve(Sequence.RecursiveInvoke);
+        var actual = PiSeries.Solve(Accumulate.RecursiveInvoke);
         Assert.True(Math.Abs(Math.PI - actual) < precition);
     }
 
     [Fact]
     public void TailRecursiveInvokeTest()
     {
-        var actual = PiSeries.Solve(Sequence.TailRecursiveInvoke);
+        var actual = PiSeries.Solve(Accumulate.TailRecursiveInvoke);
         Assert.True(Math.Abs(Math.PI - actual) < precition);
     }
 
     [Fact]
     public void ImperativeInvokeTest()
     {
-        var actual = PiSeries.Solve(Sequence.ImperativeInvoke);
+        var actual = PiSeries.Solve(Accumulate.ImperativeInvoke);
         Assert.True(Math.Abs(Math.PI - actual) < precition);
     }
 
     [Fact]
     public void DotNetInvokeTest()
     {
-        var actual = PiSeries.Solve(Sequence.DotNetInvoke);
+        var actual = PiSeries.Solve(Accumulate.DotNetInvoke);
         Assert.True(Math.Abs(Math.PI - actual) < precition);
     }
 }

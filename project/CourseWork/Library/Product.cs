@@ -12,13 +12,13 @@ public static class Product
     /// <summary>
     ///     Вычисление произведения последовательности <paramref name="term"/> от <paramref name="start"/>
     ///     до <paramref name="end"/>, где следующий элемент выбирается с помощью <paramref name="next"/>.
-    ///     Стратегия вычисления выбирается с помощью функций в <see cref="Sequence"/>.
+    ///     Стратегия вычисления выбирается с помощью функций в <see cref="Accumulate"/>.
     /// </summary>
-    /// <param name="invoke">Стратегия вычисления.</param>
+    /// <param name="strategy">Стратегия вычисления.</param>
     /// <param name="term">Общий член последовательности.</param>
     /// <param name="start">Начало последовательности.</param>
     /// <param name="next">Выбор следующего элемента.</param>
     /// <param name="end">Конец последовательности.</param>
     /// <returns>Вычисление последовательности с заданными параметрами.</returns>
-    public static double Solve(Func<Func<double, double, double>, Func<double, double>, double, Func<double, double>, double, double, double> invoke, Func<double, double> term, double start, Func<double, double> next, double end) => invoke(Operator, term, start, next, end, Base);
+    public static double Solve(Func<Func<double, double, double>, Func<double, double>, double, Func<double, double>, double, double, double> strategy, Func<double, double> term, double start, Func<double, double> next, double end) => strategy(Operator, term, start, next, end, Base);
 }

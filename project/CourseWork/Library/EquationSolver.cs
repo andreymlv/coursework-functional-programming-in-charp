@@ -3,7 +3,7 @@ namespace Library;
 
 public static class EquationSolver
 {
-    private static readonly double Epsilon = 0.001;
+    private static readonly double Epsilon = 0.0001;
 
     private static bool CloseEnough(double x, double y) => Math.Abs(x - y) < Epsilon;
 
@@ -22,9 +22,9 @@ public static class EquationSolver
             var testValue = f(midpoint);
 
             if (Positive(testValue))
-                Search(f, negPoint, midpoint);
+                return Search(f, negPoint, midpoint);
             else if (Negative(testValue))
-                Search(f, midpoint, posPoint);
+                return Search(f, midpoint, posPoint);
         }
 
         return midpoint;
@@ -41,8 +41,8 @@ public static class EquationSolver
     /// </summary>
     /// <param name="f">Функция, в которой ищем корень.</param>
     /// <param name="a">Начало интервала поиска.</param>
-    /// <param name="b">Конечц интервала поиска.</param>
-    /// <returns>Корень уровнения между <paramref name="a"/> и <paramref name="b"/></returns>
+    /// <param name="b">Конец интервала поиска.</param>
+    /// <returns>Корень уравнения между <paramref name="a"/> и <paramref name="b"/></returns>
     public static double HalfIntervalMethod(Func<double, double> f, double a, double b)
     {
         var aValue = f(a);
